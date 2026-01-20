@@ -18,12 +18,14 @@ This project contains two microservices:
 
 2. Start the services:
    ```bash
-   # Terminal 1
+   # Terminal 1 - Start user service
    cd user-service && npm start
 
-   # Terminal 2
-   cd payment-service && npm start
+   # Terminal 2 - Start payment service (set env var for local development)
+   cd payment-service && USER_SERVICE_URL=http://localhost:3001 npm start
    ```
+
+   **Note**: The `USER_SERVICE_URL` environment variable tells the payment service where to find the user service. In Docker, this defaults to `http://user-service:3001` (Docker network). Locally, we override it to `http://localhost:3001`.
 
 ## Running with Docker Compose
 

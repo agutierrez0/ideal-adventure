@@ -5,11 +5,14 @@ const axios = require('axios');
 const app = express();
 app.use(express.json());
 
+// Use environment variable for user service URL, default to Docker network
+const USER_SERVICE_URL = process.env.USER_SERVICE_URL || 'http://user-service:3001';
+
 app.post('/payments', async (req, res) => {
   const { userId, amount } = req.body;
   try {
     // Verify user exists by calling user-service
-    const userResponse = await axios.get(`http://user-service:3001/users/${userId}`);
+    const userResponse = await axios.get(`${USER_SERVICE_URL}/users/${userId}`);
     if (!userResponse.data) {
       return res.status(400).json({ error: 'User not found' });
     }
